@@ -266,7 +266,6 @@ section {
 }
 
 .header .logo img {
-  max-height: 40px;
   margin-right: 6px;
 }
 
@@ -282,21 +281,13 @@ section {
   color: #734444;
 }
 
-.header .btn-book-a-table,
-.header .btn-book-a-table:focus {
-  font-size: 14px;
+.btn_signIn {
+  padding: 8px 20px;
   color: #fff;
   background: #c37857;
-  padding: 8px 20px;
-  margin-left: 30px;
   border-radius: 50px;
   transition: 0.3s;
-}
-
-.header .btn-book-a-table:hover,
-.header .btn-book-a-table:focus:hover {
-  color: #fff;
-  background: #c37857;
+  
 }
 
 /*--------------------------------------------------------------
@@ -407,7 +398,7 @@ section {
   .navbar .dropdown ul a:hover,
   .navbar .dropdown ul .active:hover,
   .navbar .dropdown ul li:hover>a {
-    color: var(--color-primary);
+    color: #c37857;
   }
 
   .navbar .dropdown:hover>ul {
@@ -888,11 +879,14 @@ section {
 .menu .tab-content .menu-item {
   -moz-text-align-last: center;
   text-align-last: center;
+  height: 400px;
 }
 
 .menu .tab-content .menu-item .menu-img {
   padding: 0 60px;
   margin-bottom: 15px;
+  max-width: 300px;
+  max-height: 300px;
 }
 
 .menu .tab-content .menu-item h4 {
@@ -1339,9 +1333,19 @@ section {
 # Contact Section
 --------------------------------------------------------------*/
 .contact .info-item {
-  background: #f4f4f4;
-  padding: 30px;
-  height: 100%;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.contact .info-item .content {
+  display: inline-block;
+  height: 100px;
+  padding: 10px;
+}
+
+.contact .info-item .content .deskripsi {
+  margin-top: -55px;
+  margin-left: 80px;
 }
 
 .contact .info-item .icon {
@@ -1350,7 +1354,6 @@ section {
   justify-content: center;
   width: 56px;
   height: 56px;
-  font-size: 24px;
   line-height: 0;
   color: #fff;
   background: var(--color-primary);
@@ -1359,16 +1362,16 @@ section {
 }
 
 .contact .info-item h3 {
+  width: fit-content;
   font-size: 20px;
   color: #6c757d;
   font-weight: 700;
-  margin: 0 0 5px 0;
 }
 
 .contact .info-item p {
+  width: fit-content;
   padding: 0;
   margin: 0;
-  line-height: 24px;
   font-size: 14px;
 }
 
