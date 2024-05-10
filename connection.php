@@ -11,3 +11,5 @@
     ];
     
     $dbh = new PDO("mysql:host=$host;dbname=$db", $dbuser, $dbpass, $options);
+    return $dbh;
+?>

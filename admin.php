@@ -1,3 +1,6 @@
+<?php
+
+?>
 <svg style="display:none;">
   <symbol id="logo" viewBox="0 0 140 59">
     <g>

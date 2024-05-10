@@ -283,7 +283,7 @@ footer a {
         <span>or use your account</span>
         <input type="text" name="email" placeholder="email"/> 
         <input type="password" name="password" placeholder="Password" /> 
-        <a href="#">Forgot your password?</a>
+        <a href="forgotPass.php">Forgot your password?</a>
         <button type="submit" name="signIn">Sign In</button> 
     </form>
 </div>
