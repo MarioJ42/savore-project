@@ -1,3 +1,4 @@
+<!-- login regist -->
 <?php
 require 'connection.php';
 
