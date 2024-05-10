@@ -1,9 +1,10 @@
-<!-- login regist -->
+
 <?php
 require 'connection.php';
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // regist
     if (isset($_POST['signUp'])) { 
         $nama_pelanggan = $_POST['nama'];
         $password = $_POST['password'];
@@ -24,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error: " . $e->getMessage();
         }
     } elseif (isset($_POST['signIn'])) { 
+        // login
         $email = $_POST['email'];
         $password = $_POST['password'];
 
