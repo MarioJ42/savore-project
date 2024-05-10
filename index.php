@@ -47,10 +47,10 @@
           <li><a href="#about">About</a></li>
           <li><a href="#menu">Menu</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="order.html">Order</a></li>
+          <li><a href="order.php">Order</a></li>
         </ul>
       </nav><!-- .navbar -->
-      <a class="btn_signIn" href="login.html">Log Out</a>
+      <a class="btn_signIn" href="login.php">Log Out</a>
       
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
