@@ -272,7 +272,7 @@ footer a {
         <span>or use your email for registration</span>
         <input type="text" name="nama" placeholder="Name" /> 
         <input type="password" name="password" placeholder="Password" />
-        <input type="text" name="email" placeholder="Email" /> 
+        <input type="email" name="email" placeholder="Email" /> 
         <input type="tel" name="telp" placeholder="Telp" /> 
         <button type="submit" name="signUp">Sign Up</button>
     </form>
@@ -281,7 +281,7 @@ footer a {
     <form action="controller.php" method="POST">
         <h1>Sign in</h1>
         <span>or use your account</span>
-        <input type="text" name="email" placeholder="email"/> 
+        <input type="email" name="email" placeholder="email"/> 
         <input type="password" name="password" placeholder="Password" /> 
         <a href="forgotPass.php">Forgot your password?</a>
         <button type="submit" name="signIn">Sign In</button> 

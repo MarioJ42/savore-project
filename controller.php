@@ -4,7 +4,6 @@ require 'connection.php';
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // regist
     if (isset($_POST['signUp'])) { 
         $nama_pelanggan = $_POST['nama'];
         $password = $_POST['password'];
@@ -25,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error: " . $e->getMessage();
         }
     } elseif (isset($_POST['signIn'])) { 
-        // login
         $email = $_POST['email'];
         $password = $_POST['password'];
 
@@ -52,20 +50,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }elseif (isset($_POST['pay'])) { 
         $id_produk_array = $_POST['id_produk'];
         $quantity_array = $_POST['quantity'];
-        
+    
         try {
             session_start();
             $id_pelanggan = $_SESSION['user']['id_pelanggan'];
+            $harga_total = 0;
     
-            $sql_last_nota = "SELECT MAX(nota_pesanan) as last_nota_pesanan FROM pesanan";
-            $stmt_last_nota = $dbh->prepare($sql_last_nota);
-            $stmt_last_nota->execute();
-            $result = $stmt_last_nota->fetch(PDO::FETCH_ASSOC);
-    
-            $last_nota_pesanan = ($result && isset($result['last_nota_pesanan'])) ? $result['last_nota_pesanan'] + 1 : 1;
-            
-            foreach ($id_produk_array as $key => $id_produk) {
-                $quantity = intval($quantity_array[$key]); 
+            foreach ($id_produk_array as $idx => $id_produk) {
+                $quantity = intval($quantity_array[$idx]);
     
                 if ($quantity > 0) {
                     $sql_produk = "SELECT harga FROM produk WHERE id_produk = :id_produk";
@@ -74,28 +66,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $stmt_produk->execute();
                     $produk = $stmt_produk->fetch(PDO::FETCH_ASSOC);
                     $harga = floatval($produk['harga']);
-                    $harga_total = $harga * $quantity;
-    
-                    $sql_insert_pesanan = "INSERT INTO pesanan (nota_pesanan, id_produk, quantity, harga_total, STATUS, id_pelanggan) 
-                                           VALUES (:nota_pesanan, :id_produk, :quantity, :harga_total, :status, :id_pelanggan)";
-                    $stmt_insert_pesanan = $dbh->prepare($sql_insert_pesanan);
-                    $stmt_insert_pesanan->bindParam(':nota_pesanan', $last_nota_pesanan);
-                    $stmt_insert_pesanan->bindParam(':id_produk', $id_produk);
-                    $stmt_insert_pesanan->bindParam(':quantity', $quantity);
-                    $stmt_insert_pesanan->bindParam(':harga_total', $harga_total);
-                    $stmt_insert_pesanan->bindValue(':status', 1);
-                    $stmt_insert_pesanan->bindParam(':id_pelanggan', $id_pelanggan);
-                    $stmt_insert_pesanan->execute();
+                    $harga_total += $harga * $quantity;
                 }
             }
     
-            // Redirect to Order.php after processing all orders
+            $sql_insertHjual = "INSERT INTO H_jual (harga_total, STATUS) VALUES (:harga_total, :status)";
+            $stmt_hjual = $dbh->prepare($sql_insertHjual);
+            $stmt_hjual->bindParam(':harga_total', $harga_total);
+            $stmt_hjual->bindValue(':status', 1);
+            $stmt_hjual->execute();
+
+            $nota_pesanan = $dbh->lastInsertId();
+            foreach ($id_produk_array as $idx => $id_produk) {
+                $quantity = intval($quantity_array[$idx]);
+    
+                if ($quantity > 0) {
+                    $sql_produk = "SELECT harga FROM produk WHERE id_produk = :id_produk";
+                    $stmt_produk = $dbh->prepare($sql_produk);
+                    $stmt_produk->bindParam(':id_produk', $id_produk);
+                    $stmt_produk->execute();
+                    $produk = $stmt_produk->fetch(PDO::FETCH_ASSOC);
+                    $harga = floatval($produk['harga']);
+    
+                    $sql_insertDjual = "INSERT INTO D_jual (nota_pesanan, id_produk, quantity, id_pelanggan) 
+                                         VALUES (:nota_pesanan, :id_produk, :quantity, :id_pelanggan)";
+                    $stmt_djual = $dbh->prepare($sql_insertDjual);
+                    $stmt_djual->bindParam(':nota_pesanan', $nota_pesanan);
+                    $stmt_djual->bindParam(':id_produk', $id_produk);
+                    $stmt_djual->bindParam(':quantity', $quantity);
+                    $stmt_djual->bindParam(':id_pelanggan', $id_pelanggan);
+                    $stmt_djual->execute();
+                }
+            }
+    
             header("Location: Order.php");
             exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-    } 
+    }
 }
 
 ?>
