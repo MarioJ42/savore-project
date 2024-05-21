@@ -208,6 +208,7 @@
         <div class="section-header">
           <h2>Our Menu</h2>
           <p>Check Our <span>Menu</span></p>
+          
         </div>
 
         <ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
@@ -228,11 +229,11 @@
               <h4>Frappe</h4>
             </a><!-- End tab nav item -->
 
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" data-bs-target="#fruitie">
               <h4>Fruitie Series</h4>
             </a>
-          </li><!-- End tab nav item -->
+          </li> -->
         </ul>
 
         <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
@@ -377,7 +378,7 @@
             </div>
           </div><!-- End Lunch Menu Content -->
           
-          <div class="tab-pane fade" id="fruitie">
+          <!-- <div class="tab-pane fade" id="fruitie">
 
             <div class="tab-header text-center">
               <p>Menu</p>
@@ -392,7 +393,7 @@
                 <p class="price">
                   Rp.30.000,00
                 </p>
-              </div><!-- Menu Item -->
+              </div>
 
               <div class="col-lg-4 menu-item">
                 <a href="assets/img/menu/u2.png" class="glightbox"><img src="assets/img/menu/u2.png" class="menu-img img-fluid" alt=""></a>
@@ -400,7 +401,7 @@
                 <p class="price">
                   Rp.30.000,00
                 </p>
-              </div><!-- Menu Item -->
+              </div>
 
               <div class="col-lg-4 menu-item">
                 <a href="assets/img/menu/u3.png" class="glightbox"><img src="assets/img/menu/u3.png" class="menu-img img-fluid" alt=""></a>
@@ -408,7 +409,7 @@
                 <p class="price">
                   Rp.35.000,00
                 </p>
-              </div><!-- Menu Item -->
+              </div>
 
               <div class="col-lg-4 menu-item">
                 <a href="assets/img/menu/u4.png" class="glightbox"><img src="assets/img/menu/u4.png" class="menu-img img-fluid" alt=""></a>
@@ -416,10 +417,11 @@
                 <p class="price">
                   Rp.40.000,00
                 </p>
-              </div><!-- Menu Item -->
+              </div>
 
             </div>
-          </div><!-- End Lunch Menu Content -->
+          </div> -->
+          <!-- End Lunch Menu Content -->
 
         </div>
 
