@@ -28,6 +28,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // login
         $email = $_POST['email'];
         $password = $_POST['password'];
+        if ($email === 'manager@gmail.com' && $password === 'manager') {
+            session_start();
+            $_SESSION['user'] = [
+                'email' => $email,
+                'role' => 'manager'
+            ];
+            header("Location: index.php");
+            exit();
+        }
+
 
         try {
             $sql = "SELECT * FROM pelanggan WHERE email = :email AND password = :password";
@@ -95,7 +105,111 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-    } 
+    }
+
+    if (isset($_POST['addItem'])) {
+        
+        $target_dir = "menu/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+    
+        
+        $name = $_POST['name'];
+        $kategori = $_POST['kategori'];
+        $price = $_POST['price'];
+        $file = $_FILES['pict'];
+    
+        
+        $target_file = $target_dir . basename($file["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    
+        
+        $check = getimagesize($file["tmp_name"]);
+        if ($check !== false) {
+            $uploadOk = 1;
+        } else {
+            echo "File is not an image.";
+            $uploadOk = 0;
+        }
+    
+        
+        if (file_exists($target_file)) {
+            echo "file already exists.";
+            $uploadOk = 0;
+        }
+    
+        
+        if ($file["size"] > 5000000) { 
+            echo "file is too large.";
+            $uploadOk = 0;
+        }
+    
+        
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+            echo "only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+    
+        
+        if ($uploadOk == 0) {
+            echo " file was not uploaded.";
+        
+        } else {
+            if (move_uploaded_file($file["tmp_name"], $target_file)) {
+                echo "The file " . htmlspecialchars(basename($file["name"])) . " has been uploaded.";
+            } else {
+                echo "an error uploading your file.";
+            }
+        }
+    
+       
+        if ($uploadOk == 1) {
+            try {
+                
+                $dbh = new PDO("mysql:host=$host;dbname=$db", $dbuser, $dbpass, $options);
+    
+                
+                $sql = "INSERT INTO produk (nama_produk, id_kategori, harga, file_path) VALUES (:name, :kategori, :price, :file)";
+                $stmt = $dbh->prepare($sql);
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':kategori', $kategori);
+                $stmt->bindParam(':price', $price);
+                $stmt->bindParam(':file', $target_file);
+                $stmt->execute();
+    
+                echo "New record created successfully";
+                header("Location: MenuManager.php");
+                exit();
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+    }
+
+    if (isset($_POST['deleteItem'])) {
+        $product_id = $_POST['product_id'];
+        
+        try {
+            
+            $dbh = new PDO("mysql:host=$host;dbname=$db", $dbuser, $dbpass, $options);
+    
+            
+            $sql = "DELETE FROM produk WHERE id_produk = :product_id";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':product_id', $product_id);
+            $stmt->execute();
+    
+            
+            header("Location: MenuManager.php");
+            exit();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+
 }
 
 ?>

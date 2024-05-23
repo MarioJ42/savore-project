@@ -1,3 +1,8 @@
+<?php
+session_start();
+$cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manager@gmail.com';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -229,11 +234,18 @@
               <h4>Frappe</h4>
             </a><!-- End tab nav item -->
 
-          <!-- <li class="nav-item">
+            <?php if ($cekManager): ?>
+            <li class="nav-item" style="margin-top:10px;">
+              <a class="btn_signIn" href="MenuManager.php">See more</a>
+            </li>
+            <?php endif; ?>
+          <?php if (!$cekManager): ?>
+          <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" data-bs-target="#fruitie">
               <h4>Fruitie Series</h4>
             </a>
-          </li> -->
+          </li>
+          <?php endif; ?>
         </ul>
 
         <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
@@ -378,7 +390,8 @@
             </div>
           </div><!-- End Lunch Menu Content -->
           
-          <!-- <div class="tab-pane fade" id="fruitie">
+          <?php if (!$cekManager): ?>
+          <div class="tab-pane fade" id="fruitie">
 
             <div class="tab-header text-center">
               <p>Menu</p>
@@ -420,7 +433,8 @@
               </div>
 
             </div>
-          </div> -->
+          </div>
+          <?php endif; ?>
           <!-- End Lunch Menu Content -->
 
         </div>

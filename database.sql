@@ -114,12 +114,13 @@ insert  into `pesanan`(`nota_pesanan`,`id_produk`,`quantity`,`harga_total`,`STAT
 DROP TABLE IF EXISTS `produk`;
 
 CREATE TABLE `produk` (
-  `id_produk` int(11) NOT NULL AUTO_INCREMENT,
-  `nama_produk` varchar(255) DEFAULT NULL,
-  `id_kategori` int(11) DEFAULT NULL,
-  `harga` int(50) DEFAULT NULL,
+  `id_produk` INT(11) NOT NULL AUTO_INCREMENT,
+  `nama_produk` VARCHAR(255) NOT NULL,
+  `id_kategori` INT(11) NOT NULL,
+  `harga` DECIMAL(10,2) NOT NULL,
+  `file_path` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id_produk`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=INNODB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `produk` */
 
