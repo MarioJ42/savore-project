@@ -124,10 +124,11 @@
           <?php
             $products = array(
                 array("id_produk" => 1, "nama" => "Americano", "harga" => 30000),
-                array("id_produk" => 2, "nama" => "Ice Espresso", "harga" => 35000),
-                array("id_produk" => 3, "nama" => "Mocha", "harga" => 35000),
-                array("id_produk" => 4, "nama" => "Caramel Macchiato", "harga" => 40000),
-                array("id_produk" => 5, "nama" => "Ice Coffee with Milk", "harga" => 30000)
+                array("id_produk" => 2, "nama" => "Cappuccino", "harga" => 30000),
+                array("id_produk" => 3, "nama" => "Ice Espresso", "harga" => 35000),
+                array("id_produk" => 4, "nama" => "Mocha", "harga" => 35000),
+                array("id_produk" => 5, "nama" => "Caramel Macchiato", "harga" => 40000),
+                array("id_produk" => 6, "nama" => "Ice Coffee with Milk", "harga" => 30000)
             );
             foreach ($products as $product) {
             ?>
@@ -152,9 +153,9 @@
           <?php
            
             $products = array(
-                array("id_produk" => 6, "nama" => "Caramel Frappe", "harga" => 40000),
-                array("id_produk" => 7, "nama" => "Vanilla Frappe", "harga" => 35000),
-                array("id_produk" => 8, "nama" => "Matcha Frappe", "harga" => 35000)
+                array("id_produk" => 7, "nama" => "Caramel Frappe", "harga" => 40000),
+                array("id_produk" => 8, "nama" => "Vanilla Frappe", "harga" => 35000),
+                array("id_produk" => 9, "nama" => "Matcha Frappe", "harga" => 35000)
                 
             );
             foreach ($products as $product) {
@@ -180,10 +181,10 @@
           <?php
            
             $products = array(
-                array("id_produk" => 9, "nama" => "Strawberry Jasmine Tea", "harga" => 30000),
-                array("id_produk" => 10, "nama" => "Mango Green Tea", "harga" => 30000),
-                array("id_produk" => 11, "nama" => "Dragon Fruit Lemonade", "harga" => 35000),
-                array("id_produk" => 12, "nama" => "Pineapple PassionFruit Lemonade", "harga" => 40000)
+                array("id_produk" => 10, "nama" => "Strawberry Jasmine Tea", "harga" => 30000),
+                array("id_produk" => 11, "nama" => "Mango Green Tea", "harga" => 30000),
+                array("id_produk" => 12, "nama" => "Dragon Fruit Lemonade", "harga" => 35000),
+                array("id_produk" => 13, "nama" => "Pineapple PassionFruit Lemonade", "harga" => 40000)
                 
             );
             foreach ($products as $product) {
