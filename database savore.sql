@@ -103,11 +103,12 @@ DROP TABLE IF EXISTS `produk`;
 
 CREATE TABLE `produk` (
   `id_produk` INT(11) NOT NULL AUTO_INCREMENT,
-  `nama_produk` VARCHAR(255) DEFAULT NULL,
-  `id_kategori` INT(11) DEFAULT NULL,
-  `harga` INT(50) DEFAULT NULL,
+  `nama_produk` VARCHAR(255) NOT NULL,
+  `id_kategori` INT(11) NOT NULL,
+  `harga` DECIMAL(10,2) NOT NULL,
+  `file_path` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id_produk`)
-) ENGINE=INNODB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=INNODB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `produk` */
 
