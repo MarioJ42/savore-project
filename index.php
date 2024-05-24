@@ -259,37 +259,54 @@ $cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manage
 
             <div class="row gy-5">
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/two.png" class="glightbox"><img src="assets/img/menu/two.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Cappuccino</h4>
-                <p class="price">
-                  Rp.30.000,00
-                </p>
-              </div><!-- Menu Item -->
+            <?php
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/three.png" class="glightbox"><img src="assets/img/menu/three.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Ice Espresso</h4>
-                <p class="price">
-                  Rp.35.000,00
-                </p>
-              </div><!-- Menu Item -->
+require 'connection.php';
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/f3.png" class="glightbox"><img src="assets/img/menu/f3.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Matcha Frappe</h4>
-                <p class="price">
-                  Rp.35.000,00
-                </p>
-              </div><!-- Menu Item -->
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/u4.png" class="glightbox"><img src="assets/img/menu/u4.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Pineapple Passionfruit Lemonade</h4>
-                <p class="price">
-                  Rp.40.000,00
-                </p>
-              </div><!-- Menu Item -->
+try {
+    $sql = "SELECT id_produk, SUM(quantity) AS total_quantity
+            FROM D_jual
+            GROUP BY id_produk
+            ORDER BY total_quantity DESC
+            LIMIT 5";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $best_sellers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
+
+
+foreach ($best_sellers as $best_seller) {
+    $id_produk = $best_seller['id_produk'];
+    $total_quantity = $best_seller['total_quantity'];
+
+
+    try {
+        $sql_produk = "SELECT * FROM produk WHERE id_produk = :id_produk";
+        $stmt_produk = $dbh->prepare($sql_produk);
+        $stmt_produk->bindParam(':id_produk', $id_produk);
+        $stmt_produk->execute();
+        $produk = $stmt_produk->fetch(PDO::FETCH_ASSOC);
+
+
+        echo "<div class='col'>";
+        echo "<div class='card' style='width: 15rem;'>";
+        echo "<img src='assets/img/menu/{$produk['id_produk']}.png' class='card-img-top' alt='...' style='height: 30vh;'>";
+        echo "<div class='card-body text-center'>";
+        echo "<h5 class='card-title'>{$produk['nama_produk']}</h5>";
+        echo "<p class='card-text'>Rp." . number_format($produk['harga'], 2) . "</p>";
+        echo "<input type='hidden' name='id_produk[]' value='{$produk['id_produk']}'>";
+        
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+?>
 
             </div>
           </div><!-- End Starter Menu Content -->
@@ -303,53 +320,33 @@ $cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manage
 
             <div class="row gy-5">
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/one.png" class="glightbox"><img src="assets/img/menu/one.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Americano</h4>
-                <p class="price">
-                  Rp.30.000,00
-                </p>
-              </div><!-- Menu Item -->
+            <div class="row row-cols-1 row-cols-md-3 g-4 coffeeLatte hidden"> 
+            <!-- =========================== -->
+          <?php
+            $products = array(
+                array("id_produk" => 1, "nama" => "Americano", "harga" => 30000),
+                array("id_produk" => 2, "nama" => "Cappuccino", "harga" => 30000),
+                array("id_produk" => 3, "nama" => "Ice Espresso", "harga" => 35000),
+                array("id_produk" => 4, "nama" => "Mocha", "harga" => 35000),
+                array("id_produk" => 5, "nama" => "Caramel Macchiato", "harga" => 40000),
+                array("id_produk" => 6, "nama" => "Ice Coffee with Milk", "harga" => 30000)
+            );
+            foreach ($products as $product) {
+            ?>
+            <div class="col">
+                <div class="card" style="width: 15rem;">
+                    <img src="assets/img/menu/<?php echo $product['id_produk']; ?>.png" class="card-img-top" alt="..." style="height: 30vh;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><?php echo $product['nama']; ?></h5>
+                        <p class="card-text ">Rp.<?php echo number_format($product['harga'], 2); ?></p>
+                        <input type="hidden" name="id_produk[]" value="<?php echo $product['id_produk']; ?>">
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/two.png" class="glightbox"><img src="assets/img/menu/two.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Cappuccino</h4>
-                <p class="price">
-                  Rp.30.000,00
-                </p>
-              </div><!-- Menu Item -->
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+          </div>
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/three.png" class="glightbox"><img src="assets/img/menu/three.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Ice Espresso</h4>
-                <p class="price">
-                  Rp.35.000,00
-                </p>
-              </div><!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/four.png" class="glightbox"><img src="assets/img/menu/four.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Mocha</h4>
-                <p class="price">
-                  Rp.35.000,00
-                </p>
-              </div><!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/five.png" class="glightbox"><img src="assets/img/menu/five.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Caramel Macchiato</h4>
-                <p class="price">
-                  Rp.40.000,00
-                </p>
-              </div><!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/six.png" class="glightbox"><img src="assets/img/menu/six.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Ice Coffee with Milk</h4>
-                <p class="price">
-                  Rp.30.000,00
-                </p>
-              </div><!-- Menu Item -->
 
             </div>
           </div><!-- End Breakfast Menu Content -->
@@ -363,29 +360,33 @@ $cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manage
 
             <div class="row gy-5">
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/f1.png" class="glightbox"><img src="assets/img/menu/f1.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Caramel Frappe</h4>
-                <p class="price">
-                  Rp.40.000,00
-                </p>
-              </div><!-- Menu Item -->
+            <div class="row row-cols-1 row-cols-md-3 g-4 frappe hidden">
+            <!-- =========================== -->
+          <?php
+           
+            $products = array(
+                array("id_produk" => 7, "nama" => "Caramel Frappe", "harga" => 40000),
+                array("id_produk" => 8, "nama" => "Vanilla Frappe", "harga" => 35000),
+                array("id_produk" => 9, "nama" => "Matcha Frappe", "harga" => 35000)
+                
+            );
+            foreach ($products as $product) {
+            ?>
+            <div class="col">
+                <div class="card" style="width: 15rem;">
+                    <img src="assets/img/menu/<?php echo $product['id_produk']; ?>.png" class="card-img-top" alt="..." style="height: 30vh;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><?php echo $product['nama']; ?></h5>
+                        <p class="card-text ">Rp.<?php echo number_format($product['harga'], 2); ?></p>
+                        <input type="hidden" name="id_produk[]" value="<?php echo $product['id_produk']; ?>">
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/f2.png" class="glightbox"><img src="assets/img/menu/f2.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Vanilla Frappe</h4>
-                <p class="price">
-                  Rp.35.000,00
-                </p>
-              </div><!-- Menu Item -->
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+          </div>
+        </div>
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/f3.png" class="glightbox"><img src="assets/img/menu/f3.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Matcha Frappe</h4>
-                <p class="price">
-                  Rp.35.000,00
-                </p>
-              </div><!-- Menu Item -->
 
             </div>
           </div><!-- End Lunch Menu Content -->
@@ -400,50 +401,42 @@ $cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manage
 
             <div class="row gy-5">
 
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/u1.png" class="glightbox"><img src="assets/img/menu/u1.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Strawberry Jasmine Tea</h4>
-                <p class="price">
-                  Rp.30.000,00
-                </p>
-              </div>
-
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/u2.png" class="glightbox"><img src="assets/img/menu/u2.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Mango Green Tea</h4>
-                <p class="price">
-                  Rp.30.000,00
-                </p>
-              </div>
-
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/u3.png" class="glightbox"><img src="assets/img/menu/u3.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Dragon Fruit Lemonade</h4>
-                <p class="price">
-                  Rp.35.000,00
-                </p>
-              </div>
-
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/u4.png" class="glightbox"><img src="assets/img/menu/u4.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Pineapple Passionfruit Lemonade </h4>
-                <p class="price">
-                  Rp.40.000,00
-                </p>
-              </div>
-
+            <div class="row row-cols-1 row-cols-md-3 g-4 fruitie hidden">
+            <!-- =========================== -->
+          <?php
+           
+            $products = array(
+                array("id_produk" => 10, "nama" => "Strawberry Jasmine Tea", "harga" => 30000),
+                array("id_produk" => 11, "nama" => "Mango Green Tea", "harga" => 30000),
+                array("id_produk" => 12, "nama" => "Dragon Fruit Lemonade", "harga" => 35000),
+                array("id_produk" => 13, "nama" => "Pineapple PassionFruit Lemonade", "harga" => 40000)
+                
+            );
+            foreach ($products as $product) {
+            ?>
+            <div class="col">
+                <div class="card" style="width: 15rem;">
+                    <img src="assets/img/menu/<?php echo $product['id_produk']; ?>.png" class="card-img-top" alt="..." style="height: 30vh;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><?php echo $product['nama']; ?></h5>
+                        <p class="card-text ">Rp.<?php echo number_format($product['harga'], 2); ?></p>
+                        <input type="hidden" name="id_produk[]" value="<?php echo $product['id_produk']; ?>">
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+          </div>
+        </div>
             </div>
           </div>
           <?php endif; ?>
           <!-- End Lunch Menu Content -->
-
         </div>
-
       </div>
     </section><!-- End Menu Section -->
 
     <!-- ======= Testimonials Section ======= -->
-    <section id="testimonials" class="testimonials section-bg">
+    <section id="testimonials" class="testimonials section-bg" >
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
