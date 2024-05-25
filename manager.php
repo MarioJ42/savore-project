@@ -1,6 +1,10 @@
 <?php
+session_start();
+$cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manager@gmail.com';
 
 ?>
+
+
 <svg style="display:none;">
   <symbol id="logo" viewBox="0 0 140 59">
     <g>
