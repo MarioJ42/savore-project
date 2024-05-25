@@ -165,36 +165,3 @@ insert  into `stok`(`id_stok`,`nama_stok`,`quantity`) values
 (8,'Matcha',2),
 (9,'Vanilla',5),
 (10,'Jasmine Tea',2);
-
-/*Table structure for table `supplier` */
-
-DROP TABLE IF EXISTS `supplier`;
-
-CREATE TABLE `supplier` (
-  `id_supplier` int(11) NOT NULL AUTO_INCREMENT,
-  `nama_supplier` varchar(255) DEFAULT NULL,
-  `alamat` varchar(255) DEFAULT NULL,
-  `telp` varchar(225) DEFAULT NULL,
-  PRIMARY KEY (`id_supplier`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-/*Data for the table `supplier` */
-
-/*Table structure for table `transaksi` */
-
-DROP TABLE IF EXISTS `transaksi`;
-
-CREATE TABLE `transaksi` (
-  `nota_pesanan` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pelanggan` int(11) DEFAULT NULL,
-  `id_pegawai` int(11) DEFAULT NULL,
-  `subtotal` int(11) DEFAULT NULL,
-  PRIMARY KEY (`nota_pesanan`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-/*Data for the table `transaksi` */
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
