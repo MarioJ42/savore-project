@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (isset($_POST['signIn'])) { 
         $email = $_POST['email'];
         $password = $_POST['password'];
+        
         if ($email === 'manager@gmail.com' && $password === 'manager') {
             session_start();
             $_SESSION['user'] = [
@@ -35,19 +36,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: index.php");
             exit();
         }
-
+    
         try {
-            $sql = "SELECT * FROM pelanggan WHERE email = :email AND password = :password";
-            $stmt = $dbh->prepare($sql);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', $password);
-            $stmt->execute();
-
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($user) {
+            $sql_pegawai = "SELECT * FROM pegawai WHERE email = :email AND password = :password";
+            $stmt_pegawai = $dbh->prepare($sql_pegawai);
+            $stmt_pegawai->bindParam(':email', $email);
+            $stmt_pegawai->bindParam(':password', $password);
+            $stmt_pegawai->execute();
+    
+            $pegawai = $stmt_pegawai->fetch(PDO::FETCH_ASSOC);
+    
+            if ($pegawai) {
                 session_start();
-                $_SESSION['user'] = $user;
+                $_SESSION['user'] = $pegawai;
+                header("Location: pegawai.php"); 
+                exit();
+            }
+            $sql_pelanggan = "SELECT * FROM pelanggan WHERE email = :email AND password = :password";
+            $stmt_pelanggan = $dbh->prepare($sql_pelanggan);
+            $stmt_pelanggan->bindParam(':email', $email);
+            $stmt_pelanggan->bindParam(':password', $password);
+            $stmt_pelanggan->execute();
+    
+            $pelanggan = $stmt_pelanggan->fetch(PDO::FETCH_ASSOC);
+    
+            if ($pelanggan) {
+                session_start();
+                $_SESSION['user'] = $pelanggan;
                 header("Location: index.php"); 
                 exit();
             } else {
@@ -212,6 +227,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             
             header("Location: MenuManager.php");
+            exit();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id_stok = isset($_POST['id_stok']) ? (int) $_POST['id_stok'] : 0;
+        $quantity = isset($_POST['quantity']) ? (int) $_POST['quantity'] : 0;
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
+    
+        try {
+            if ($action === 'increase') {
+                $sql = "UPDATE stok SET quantity = quantity + :quantity WHERE id_stok = :id_stok";
+            } elseif ($action === 'decrease') {
+                $sql = "UPDATE stok SET quantity = quantity - :quantity WHERE id_stok = :id_stok";
+            } else {
+                throw new Exception("Invalid action");
+            }
+    
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':id_stok', $id_stok, PDO::PARAM_INT);
+            $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            header('Location: manager.php');
+            exit;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
+    
+        if ($action === 'complete_order') {
+            $nota_pesanan = isset($_POST['nota_pesanan']) ? $_POST['nota_pesanan'] : '';
+    
+            try {
+                $sql = "UPDATE H_jual SET status = 0 WHERE nota_pesanan = :nota_pesanan";
+                $stmt = $dbh->prepare($sql);
+                $stmt->bindParam(':nota_pesanan', $nota_pesanan, PDO::PARAM_STR);
+                $stmt->execute();
+    
+                header('Location: pegawai.php');
+                exit;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+    }if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id_pegawai = $_POST['id_pegawai'];
+        $new_gaji = $_POST['new_gaji'];
+    
+        try {
+            $sql = "UPDATE pegawai SET gaji = :new_gaji WHERE id_pegawai = :id_pegawai";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':new_gaji', $new_gaji, PDO::PARAM_INT);
+            $stmt->bindParam(':id_pegawai', $id_pegawai, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            header("Location: manager.php");
             exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
