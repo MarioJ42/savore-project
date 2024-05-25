@@ -2,6 +2,12 @@
 session_start();
 $cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manager@gmail.com';
 
+if (!$cekManager) {
+  echo "<script>alert('Only the manager can access this page.'); window.location.href = 'login.php';</script>";
+  exit();
+}
+?>
+
 ?>
 
 
@@ -658,6 +664,7 @@ margin-left: 4px;
 }
 
 </style>
+
 <header class="page-header">
   <nav>
       
