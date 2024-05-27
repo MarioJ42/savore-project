@@ -233,26 +233,110 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id_stok = isset($_POST['id_stok']) ? (int) $_POST['id_stok'] : 0;
-        $quantity = isset($_POST['quantity']) ? (int) $_POST['quantity'] : 0;
         $action = isset($_POST['action']) ? $_POST['action'] : '';
     
         try {
-            if ($action === 'increase') {
-                $sql = "UPDATE stok SET quantity = quantity + :quantity WHERE id_stok = :id_stok";
-            } elseif ($action === 'decrease') {
-                $sql = "UPDATE stok SET quantity = quantity - :quantity WHERE id_stok = :id_stok";
-            } else {
-                throw new Exception("Invalid action");
+            if ($action === 'add_supplier') {
+                $id_stok = $_POST['id_stok'];
+                $nama_supplier = $_POST['nama_supplier'];
+                $no_telp = $_POST['no_telp'];
+        
+                try {
+                    $sql = "INSERT INTO supplier (id_stok, nama_supplier, no_telp) VALUES (:id_stok, :nama_supplier, :no_telp)";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->bindParam(':id_stok', $id_stok, PDO::PARAM_INT);
+                    $stmt->bindParam(':nama_supplier', $nama_supplier, PDO::PARAM_STR);
+                    $stmt->bindParam(':no_telp', $no_telp, PDO::PARAM_STR);
+                    $stmt->execute();
+        
+                    header('Location: supplier.php');
+                    exit;
+                } catch (PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+            } 
+            elseif ($action === 'update_no_telp') {
+                $id_supplier = isset($_POST['id_supplier']) ? $_POST['id_supplier'] : '';
+                $no_telp = isset($_POST['no_telp']) ? $_POST['no_telp'] : '';
+        
+                try {
+                    $sql = "UPDATE supplier SET no_telp = :no_telp WHERE id_supplier = :id_supplier";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->bindParam(':no_telp', $no_telp, PDO::PARAM_STR);
+                    $stmt->bindParam(':id_supplier', $id_supplier, PDO::PARAM_INT);
+                    $stmt->execute();
+        
+                    header('Location: supplier.php');
+                    exit;
+                } catch (PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+            } 
+            elseif ($action === 'delete_supplier') {
+                $id_supplier = isset($_POST['id_supplier']) ? $_POST['id_supplier'] : '';
+        
+                try {
+                    $sql = "DELETE FROM supplier WHERE id_supplier = :id_supplier";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->bindParam(':id_supplier', $id_supplier, PDO::PARAM_INT);
+                    $stmt->execute();
+        
+                    header('Location: supplier.php');
+                    exit;
+                } catch (PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
             }
+            elseif ($action === 'increase' || $action === 'decrease') {
+                $id_stok = isset($_POST['id_stok']) ? (int)$_POST['id_stok'] : 0;
+                $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 0;
     
-            $stmt = $dbh->prepare($sql);
-            $stmt->bindParam(':id_stok', $id_stok, PDO::PARAM_INT);
-            $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
-            $stmt->execute();
+                if ($action === 'increase') {
+                    $sql = "UPDATE stok SET quantity = quantity + :quantity WHERE id_stok = :id_stok";
+                } elseif ($action === 'decrease') {
+                    $sql = "UPDATE stok SET quantity = quantity - :quantity WHERE id_stok = :id_stok";
+                } else {
+                    throw new Exception("Invalid action");
+                }
     
-            header('Location: manager.php');
-            exit;
+                $stmt = $dbh->prepare($sql);
+                $stmt->bindParam(':id_stok', $id_stok, PDO::PARAM_INT);
+                $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+                $stmt->execute();
+    
+                header('Location: manager.php');
+                exit;
+            } elseif ($action === 'add_employee') {
+                $nama_pegawai = $_POST['nama_pegawai'];
+                $password = $_POST['password']; 
+                $gaji = $_POST['gaji'];
+                $telp = $_POST['telp'];
+                $email = $_POST['email'];
+    
+                $sql = "INSERT INTO pegawai (nama_pegawai, password, gaji, telp, email) VALUES (:nama_pegawai, :password, :gaji, :telp, :email)";
+                $stmt = $dbh->prepare($sql);
+                $stmt->bindParam(':nama_pegawai', $nama_pegawai);
+                $stmt->bindParam(':password', $password);
+                $stmt->bindParam(':gaji', $gaji);
+                $stmt->bindParam(':telp', $telp);
+                $stmt->bindParam(':email', $email);
+                $stmt->execute();
+    
+                header('Location: manager.php');
+                exit;
+            } elseif ($action === 'update_gaji') {
+                $id_pegawai = $_POST['id_pegawai'];
+                $new_gaji = $_POST['new_gaji'];
+    
+                $sql = "UPDATE pegawai SET gaji = :new_gaji WHERE id_pegawai = :id_pegawai";
+                $stmt = $dbh->prepare($sql);
+                $stmt->bindParam(':new_gaji', $new_gaji, PDO::PARAM_INT);
+                $stmt->bindParam(':id_pegawai', $id_pegawai, PDO::PARAM_INT);
+                $stmt->execute();
+    
+                header('Location: manager.php');
+                exit;
+            }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         } catch (Exception $e) {
@@ -266,10 +350,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nota_pesanan = isset($_POST['nota_pesanan']) ? $_POST['nota_pesanan'] : '';
     
             try {
-                $sql = "UPDATE H_jual SET status = 0 WHERE nota_pesanan = :nota_pesanan";
+                $sql = "SELECT d.id_pelanggan, h.harga_total
+                        FROM D_jual d
+                        JOIN H_jual h ON d.nota_pesanan = h.nota_pesanan
+                        WHERE d.nota_pesanan = :nota_pesanan";
                 $stmt = $dbh->prepare($sql);
                 $stmt->bindParam(':nota_pesanan', $nota_pesanan, PDO::PARAM_STR);
                 $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+                if ($result) {
+                    $id_pelanggan = $result['id_pelanggan'];
+                    $total_transaksi = $result['harga_total'];
+                    $tanggal = date('Y-m-d'); 
+                    $sql_insert = "INSERT INTO history (id_pelanggan, total_transaksi, tanggal) 
+                                   VALUES (:id_pelanggan, :total_transaksi, :tanggal)";
+                    $stmt_insert = $dbh->prepare($sql_insert);
+                    $stmt_insert->bindParam(':id_pelanggan', $id_pelanggan, PDO::PARAM_INT);
+                    $stmt_insert->bindParam(':total_transaksi', $total_transaksi, PDO::PARAM_INT);
+                    $stmt_insert->bindParam(':tanggal', $tanggal, PDO::PARAM_STR);
+                    $stmt_insert->execute();
+                    $sql_update = "UPDATE H_jual SET status = 0 WHERE nota_pesanan = :nota_pesanan";
+                    $stmt_update = $dbh->prepare($sql_update);
+                    $stmt_update->bindParam(':nota_pesanan', $nota_pesanan, PDO::PARAM_STR);
+                    $stmt_update->execute();
+                }
     
                 header('Location: pegawai.php');
                 exit;
