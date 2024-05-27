@@ -10,8 +10,19 @@
     <a class="btn_signIn" href="login.php">Log Out</a>
     <a class="btn_signIn" href="supplier.php">Supplier</a>
 <?php
+
+    session_start();
+    $cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manager@gmail.com';
+    
+    if (!$cekManager) {
+      echo "<script>alert('Only the manager can access this page.'); window.location.href = 'login.php';</script>";
+      exit();
+    }
+   
+
     require 'connection.php';
     require 'controller.php';
+
 
     try {
         $sql = "SELECT * FROM stok";
