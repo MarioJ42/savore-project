@@ -36,7 +36,6 @@
         <center>
             <div class="container" style="margin: 3vh;">
                 <div class="btn-group mt-3" role="group" aria-label="Basic example">
-                  <button type="button" class="btn" id="bestsellerBtn">Our Bestseller</button>
                   <button type="button" class="btn" id="coffeeLatteBtn">Coffee and Latte</button>
                   <button type="button" class="btn" id="frappeBtn">Frappe</button>
                   <button type="button" class="btn" id="fruitieBtn">Fruitie Series</button>
@@ -260,10 +259,6 @@ function removeBoldStyle() {
     }
 
    
-    document.getElementById('bestsellerBtn').addEventListener('click', function() {
-        removeBoldStyle();
-        this.style.fontWeight = 'bold';
-    });
 
     document.getElementById('coffeeLatteBtn').addEventListener('click', function() {
         removeBoldStyle();
@@ -280,27 +275,23 @@ function removeBoldStyle() {
         this.style.fontWeight = 'bold';
     });
 
-        const bestsellerBtn = document.getElementById('bestsellerBtn');
+
         const coffeeLatteBtn = document.getElementById('coffeeLatteBtn');
         const frappeBtn = document.getElementById('frappeBtn');
         const fruitieBtn = document.getElementById('fruitieBtn');
       
-        const bestsellerCards = document.querySelectorAll('.bestseller');
+
         const coffeeLatteCards = document.querySelectorAll('.coffeeLatte');
         const frappeCards = document.querySelectorAll('.frappe');
         const fruitieCards = document.querySelectorAll('.fruitie');
     
         function hideAllCards() {
-          bestsellerCards.forEach(card => card.classList.add('hidden'));
           coffeeLatteCards.forEach(card => card.classList.add('hidden'));
           frappeCards.forEach(card => card.classList.add('hidden'));
           fruitieCards.forEach(card => card.classList.add('hidden'));
         }
       
-        bestsellerBtn.addEventListener('click', function() {
-          hideAllCards();
-          bestsellerCards.forEach(card => card.classList.remove('hidden'));
-        });
+
       
         coffeeLatteBtn.addEventListener('click', function() {
           hideAllCards();
