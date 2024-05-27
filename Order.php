@@ -209,46 +209,29 @@
       </div>
     </div>
 
-
-    <!-- <center><button style="width: 10vw; background-color: blue; margin: 3vh;border-radius: 10px;height: 5vh;">Order</button></center> -->
-    <center>
-      <!-- <button id="pay-button">Pay!</button> -->
-
-    <!-- @TODO: You can add the desired ID as a reference for the embedId parameter. -->
-    <div id="snap-container"></div>
-  
-    <script type="text/javascript">
-      // For example trigger on button clicked, or any time you need
-      var payButton = document.getElementById('pay-button');
-      payButton.addEventListener('click', async function () {
-        // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token.
-        // Also, use the embedId that you defined in the div above, here.
-        // window.snap.embed('YOUR_SNAP_TOKEN', {
-        //   embedId: 'snap-container'
-        // });
-        
-        // minta transaction token pakai ajax / fetch
-        try {
-          const response = await fetch('midtrans/placeOrder.php', {
-            method: 'POST',
-            body: data
-          })
-          const token = await response.text();
-          console.log(token);
-          // window.snap.pay('');
-
-        } catch (err) {
-          console.log(err.message);
-        }
-
-
-
-      });
-    </script>
-    </center>
-      
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var payButton = document.getElementById('pay-button');
+            payButton.addEventListener('click', async function (event) {
+                event.preventDefault();
 
+                const data = document.querySelector('form');
+                try {
+                    const response = await fetch('assets/php/placeOrder.php', {
+                        method: 'POST',
+                        body: data
+                    });
+                    const token = await response.text();
+                    console.log(token);
+                    window.snap.pay(token);
+                } catch (err) {
+                    console.log(err.message);
+                }
+            });
+        });
+    </script>
+    
     <script>
 
 function removeBoldStyle() {
@@ -257,8 +240,6 @@ function removeBoldStyle() {
             button.style.fontWeight = 'normal';
         });
     }
-
-   
 
     document.getElementById('coffeeLatteBtn').addEventListener('click', function() {
         removeBoldStyle();

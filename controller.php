@@ -123,8 +123,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
     
-            header("Location: Order.php");
-            exit();
+            $params = array(
+                'transaction_details' => array(
+                    'order_id' => $last_nota_pesanan, 
+                    'gross_amount' => $harga_total
+                ),
+                'item_details' => json_decode($_POST['products'], true),
+                'customer_details' => array(
+                    'first_name' => $_POST['nama'],
+                    'email' => $_POST['email'],
+                    'phone' => $_POST['telp']
+                ),
+            );
+
+            // $snapToken = \Midtrans\Snap::getSnapToken($params);
+            // header("Location: " . $snapToken);  // header("Location: Order.php");
+            // exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
