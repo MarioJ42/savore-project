@@ -85,7 +85,7 @@
                               <input type="hidden" name="nota_pesanan" value="<?php echo ($order['nota_pesanan']); ?>">
                               <button type="submit" class="btn btn-primary" name="action" value="view_detail">Detail</button>
                           </form>
-                          <form action="controller.php" method="post" style="display: inline;">
+                          <form action="PegawaiController.php" method="post" style="display: inline;">
                               <input type="hidden" name="nota_pesanan" value="<?php echo ($order['nota_pesanan']); ?>">
                               <button type="submit" class="btn btn-success" name="action" value="complete_order">Selesai</button>
                           </form>

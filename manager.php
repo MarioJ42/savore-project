@@ -11,13 +11,7 @@
     <a class="btn_signIn" href="supplier.php">Supplier</a>
 <?php
 
-    session_start();
-    $cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manager@gmail.com';
-    
-    if (!$cekManager) {
-      echo "<script>alert('Only the manager can access this page.'); window.location.href = 'login.php';</script>";
-      exit();
-    }
+
    
 
     require 'connection.php';
@@ -50,7 +44,7 @@
                 <td><?php echo ($product['nama_stok']); ?></td>
                 <td><?php echo ($product['quantity']); ?></td>
                 <td>
-                    <form action="controller.php" method="post">
+                    <form action="ManagerController.php" method="post">
                         <input type="hidden" name="id_stok" value="<?php echo ($product['id_stok']); ?>">
                         <input type="number" name="quantity" value="0" min="0">
                         <button type="submit" name="action" value="increase" style="background-color: green; color: black; border-radius: 5px;height:30px,">Tambah</button>
@@ -93,7 +87,7 @@
                     <td><?php echo ($order['gaji']); ?></td>
                     <td><?php echo ($order['telp']); ?></td>
                     <td>
-                        <form action="controller.php" method="post">
+                        <form action="ManagerController.php.php" method="post">
                             <input type="hidden" name="id_pegawai" value="<?php echo ($order['id_pegawai']); ?>">
                             <input type="number" name="new_gaji" value="<?php echo ($order['gaji']); ?>" min="0" required>
                             <button type="submit" class="btn btn-success">Update</button>
@@ -104,7 +98,7 @@
         </tbody>
     </table>
     <h2>Tambah Pegawai</h2>
-        <form action="controller.php" method="post">
+        <form action="ManagerController.php.php" method="post">
             <input type="hidden" name="action" value="add_employee">
             <div>
                 <label for="nama_pegawai">Nama Pegawai:</label>
