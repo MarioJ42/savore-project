@@ -64,13 +64,13 @@
                     echo "<td>" . $supplier['nama_supplier'] . "</td>";
                     echo "<td>" . $supplier['no_telp'] . "</td>";
                     echo "<td>";
-                    echo "<form action='controller.php' method='post'>";
+                    echo "<form action='Suppliercontroller.php' method='post'>";
                     echo "<input type='hidden' name='action' value='update_no_telp'>";
                     echo "<input type='hidden' name='id_supplier' value='" . $supplier['id_supplier'] . "'>";
                     echo "<input type='text' name='no_telp' placeholder='No. Telp Baru'>";
                     echo "<button type='submit'>Update No. Telp</button>";
                     echo "</form>";
-                    echo "<form action='controller.php' method='post'>";
+                    echo "<form action='Suppliercontroller.php' method='post'>";
                     echo "<input type='hidden' name='action' value='delete_supplier'>";
                     echo "<input type='hidden' name='id_supplier' value='" . $supplier['id_supplier'] . "'>";
                     echo "<button type='submit'>Delete</button>";
@@ -86,7 +86,7 @@
     </table>
 
         <h2>Tambah Supplier</h2>
-    <form action="controller.php" method="post">
+    <form action="Suppliercontroller.php" method="post">
         <input type="hidden" name="action" value="add_supplier">
         <div>
             <label for="id_stok">ID Stok:</label>
