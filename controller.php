@@ -67,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             } else {
                 echo "<script>alert('Invalid email or password');</script>"; 
+                header("Location: login.php");
             }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();

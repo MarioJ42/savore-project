@@ -102,6 +102,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+    }elseif ($action === 'delete_pegawai') {
+        $id_pegawai = $_POST['id_pegawai'];
+
+        try {
+            $sql = "DELETE FROM pegawai WHERE id_pegawai = :id_pegawai";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':id_pegawai', $id_pegawai, PDO::PARAM_INT);
+            $stmt->execute();
+
+            echo "<script>alert('Success delete pegawai!'); </script>";
+            header('Location: manager.php');
+            exit;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 }
 ?>
