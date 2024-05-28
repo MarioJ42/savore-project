@@ -2,7 +2,6 @@
 require 'connection.php';
 require 'controller.php';
 
-// Fetch products from database
 try {
     $sql = "SELECT * FROM produk";
     $stmt = $dbh->prepare($sql);
