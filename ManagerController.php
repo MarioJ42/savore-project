@@ -67,6 +67,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
+    } elseif ($_POST['action'] == 'add_stock') {
+        $nama_stok = $_POST['nama_stok'];
+        $quantity = $_POST['quantity'];
+
+        try {
+            $sql = "INSERT INTO stok (nama_stok, quantity) VALUES (:nama_stok, :quantity)";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':nama_stok', $nama_stok);
+            $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+            $stmt->execute();
+            
+
+            echo "<script>alert('Success add new stock!'); </script>";
+        
+            header('Location: manager.php');
+            exit;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        
+    }elseif ($action === 'delete_stok') {
+        $id_stok = $_POST['id_stok'];
+
+        try {
+            $sql = "DELETE FROM stok WHERE id_stok = :id_stok";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':id_stok', $id_stok, PDO::PARAM_INT);
+            $stmt->execute();
+
+            echo "<script>alert('Success delete stock!'); </script>";
+            header('Location: manager.php');
+            exit;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 }
 ?>

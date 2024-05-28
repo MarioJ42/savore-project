@@ -31,24 +31,31 @@
                 <th>Nama</th>
                 <th>Quantity</th>
                 <th>Update Stok</th>
+                <!-- <th>Delete</th> -->
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($products as $product): ?>
-            <tr>
-                <td><?php echo ($product['id_stok']); ?></td>
-                <td><?php echo ($product['nama_stok']); ?></td>
-                <td><?php echo ($product['quantity']); ?></td>
-                <td>
-                    <form action="ManagerController.php" method="post">
-                        <input type="hidden" name="id_stok" value="<?php echo ($product['id_stok']); ?>">
-                        <input type="number" name="quantity" value="0" min="0">
-                        <button type="submit" name="action" value="increase" style="background-color: green; color: black; border-radius: 5px;height:30px;">Tambah</button>
-                        <button type="submit" name="action" value="decrease" style="background-color: red; color: black; border-radius: 5px;height:30px;">Kurangi</button>
-                    </form>
-                </td>
-            </tr>
-            <?php endforeach; ?>
+        <?php foreach ($products as $product): ?>
+        <tr>
+            <td><?php echo ($product['id_stok']); ?></td>
+            <td><?php echo ($product['nama_stok']); ?></td>
+            <td><?php echo ($product['quantity']); ?></td>
+            <td>
+                <form action="ManagerController.php" method="post">
+                    <input type="hidden" name="id_stok" value="<?php echo ($product['id_stok']); ?>">
+                    <input type="number" name="quantity" value="0" min="0">
+                    <button type="submit" name="action" value="increase" style="background-color: green; color: black; border-radius: 5px;height:30px;">Tambah</button>
+                    <button type="submit" name="action" value="decrease" style="background-color: red; color: black; border-radius: 5px;height:30px;">Kurangi</button>
+                </form>
+            </td>
+            <td>
+                <form action="ManagerController.php" method="post" style="display:inline;">
+                    <input type="hidden" name="id_stok" value="<?php echo ($product['id_stok']); ?>">
+                    <button type="submit" name="action" value="delete_stok" style="background-color: darkred; color: white; border-radius: 5px;height:30px;">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
 
@@ -117,5 +124,19 @@
         </div>
         <button type="submit">Tambah Pegawai</button>
     </form>
+
+    <h2>Tambah Stok Baru</h2>
+    <form action="ManagerController.php" method="post">
+    <input type="hidden" name="action" value="add_stock">
+    <div>
+        <label for="nama_stok">Nama Stok:</label>
+        <input type="text" name="nama_stok" required>
+    </div>
+    <div>
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" min="0" required>
+    </div>
+    <button type="submit">Tambah Stok</button>
+</form>
 </body>
 </html>
