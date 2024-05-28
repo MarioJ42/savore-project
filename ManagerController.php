@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute();
             
 
-            echo "<script>alert('Success add new stock!'); </script>";
+            echo "<script>alert('Success add new stock!') </script>";
         
             header('Location: manager.php');
             exit;
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':id_stok', $id_stok, PDO::PARAM_INT);
             $stmt->execute();
 
-            echo "<script>alert('Success delete stock!'); </script>";
+            echo "<script>alert('Success delete stock!') </script>";
             header('Location: manager.php');
             exit;
         } catch (PDOException $e) {
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':id_pegawai', $id_pegawai, PDO::PARAM_INT);
             $stmt->execute();
 
-            echo "<script>alert('Success delete pegawai!'); </script>";
+            echo "<script>alert('Success delete pegawai!')</script>";
             header('Location: manager.php');
             exit;
         } catch (PDOException $e) {
