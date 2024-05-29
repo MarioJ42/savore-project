@@ -53,6 +53,7 @@ $cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manage
           <li><a href="#menu">Menu</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="order.php">Order</a></li>
+          <li><a href="profile.php">Profile</a></li>
           <?php if ($cekManager): ?>
             <li><a class="" href="manager.php">Manager</a></li>
           <?php endif; ?>
