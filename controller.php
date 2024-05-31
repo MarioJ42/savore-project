@@ -130,6 +130,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+    // cek delete profile
+    }elseif (isset($_POST['action']) && $_POST['action'] == 'deleteProfile') {
+        // ambil id user dari session
+        $id_pelanggan = $_SESSION['user']['id_pelanggan'];
+
+        try {
+            // delete data di db
+            $sql = "DELETE FROM pelanggan WHERE id_pelanggan = :id_pelanggan";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':id_pelanggan', $id_pelanggan);
+            $stmt->execute();
+
+            session_destroy();
+
+            header("Location: login.php");
+            exit();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }elseif (isset($_POST['pay'])) { 
         $id_produk_array = $_POST['id_produk'];
         $quantity_array = $_POST['quantity'];
