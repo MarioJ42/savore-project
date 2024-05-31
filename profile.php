@@ -57,19 +57,19 @@ $user = $_SESSION['user'];
     <input type="hidden" name="action" value="updateProfile">
     <div class="form-group">
         <label for="namaPelanggan">Nama Pelanggan</label>
-        <input type="text" class="form-control" id="namaPelanggan" name="nama" value="<?php echo htmlspecialchars($user['nama_pelanggan']); ?>" placeholder="Masukkan Nama">
+        <input type="text" class="form-control" id="namaPelanggan" name="nama" value="<?php echo htmlspecialchars($user['nama_pelanggan']); ?>" placeholder="Masukkan Nama" required>
     </div>
     <div class="form-group">
         <label for="emailPelanggan">Email</label>
-        <input type="email" class="form-control" id="emailPelanggan" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" placeholder="Masukkan Email">
+        <input type="email" class="form-control" id="emailPelanggan" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" placeholder="Masukkan Email" required>
     </div>
     <div class="form-group">
         <label for="telpPelanggan">Telepon</label>
-        <input type="tel" class="form-control" id="telpPelanggan" name="telp" value="<?php echo htmlspecialchars($user['telp']); ?>" placeholder="Masukkan Nomor Telepon">
+        <input type="tel" class="form-control" id="telpPelanggan" name="telp" value="<?php echo htmlspecialchars($user['telp']); ?>" placeholder="Masukkan Nomor Telepon" required>
     </div>
     <div class="form-group">
         <label for="passwordPelanggan">Password</label>
-        <input type="password" class="form-control" id="passwordPelanggan" name="password" value="<?php echo htmlspecialchars($user['password']); ?>" placeholder="Masukkan Password">
+        <input type="password" class="form-control" id="passwordPelanggan" name="password" value="<?php echo htmlspecialchars($user['password']); ?>" placeholder="Masukkan Password" required>
     </div>
     <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
     <button type="button" class="btn btn-danger btn-block" onclick="window.location.href='login.php'">Delete Profile</button>
