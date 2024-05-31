@@ -1,8 +1,7 @@
 
 <?php
+session_start();
 require 'connection.php';
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['signUp'])) { 
         $nama_pelanggan = $_POST['nama'];
@@ -18,6 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':telp', $telp);
             $stmt->execute();
+            $_SESSION['user'] = [
+                'nama_pelanggan' => $nama_pelanggan,
+                'email' => $email,
+                'telp' => $telp,
+                'password' => $password
+            ];
             header("Location: login.php"); 
             exit();
         } catch (PDOException $e) {
@@ -26,6 +31,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (isset($_POST['signIn'])) { 
         $email = $_POST['email'];
         $password = $_POST['password'];
+        try {
+            // Check for pelanggan (customer)
+            $sql_pelanggan = "SELECT * FROM pelanggan WHERE email = :email AND password = :password";
+            $stmt_pelanggan = $dbh->prepare($sql_pelanggan);
+            $stmt_pelanggan->bindParam(':email', $email);
+            $stmt_pelanggan->bindParam(':password', $password);
+            $stmt_pelanggan->execute();
+            $pelanggan = $stmt_pelanggan->fetch(PDO::FETCH_ASSOC);
+    
+            if ($pelanggan) {
+                $_SESSION['user'] = $pelanggan;
+                header("Location: index.php");
+                exit();
+            } else {
+                echo "<script>alert('Invalid email or password');</script>";
+                header("Location: index.php");
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
         
         if ($email === 'manager@gmail.com' && $password === 'manager') {
             session_start();
@@ -69,6 +94,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "<script>alert('Invalid email or password');</script>"; 
                 header("Location: login.php");
             }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+       // cek edit profile
+    }elseif (isset($_POST['action']) && $_POST['action'] == 'updateProfile') {
+        // ambil data user
+        $nama_pelanggan = $_POST['nama'];
+        $email = $_POST['email'];
+        $telp = $_POST['telp'];
+        $password = $_POST['password'];
+        
+        // ambil id user dari session
+        $id_pelanggan = $_SESSION['user']['id_pelanggan'];
+
+        try {
+            // update data di db
+            $sql = "UPDATE pelanggan SET nama_pelanggan = :nama_pelanggan, email = :email, telp = :telp, password = :password WHERE id_pelanggan = :id_pelanggan";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':nama_pelanggan', $nama_pelanggan);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':telp', $telp);
+            $stmt->bindParam(':password', $password);
+            $stmt->bindParam(':id_pelanggan', $id_pelanggan);
+            $stmt->execute();
+
+            // update data session supaya values baru
+            $_SESSION['user']['nama_pelanggan'] = $nama_pelanggan;
+            $_SESSION['user']['email'] = $email;
+            $_SESSION['user']['telp'] = $telp;
+            $_SESSION['user']['password'] = $password;
+
+            header("Location: profile.php");
+            exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -247,13 +305,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error: " . $e->getMessage();
         }
     }
-
-
-
-
-
-
-
 }
-
 ?>

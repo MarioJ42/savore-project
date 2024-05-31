@@ -1,3 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$user = $_SESSION['user'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,59 +20,61 @@
 </head>
 <style>
     body {
-    background-color: #f8f9fa;
-}
-
-.profile-card {
-    max-width: 500px;
-    margin: auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: #fff;
-}
-
-.card-title {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    font-weight: bold;
-}
-
-.btn-block {
-    margin-top: 20px;
-}
-
-.btn-danger {
-    margin-top: 10px;
-}
-
+        background-color: #f8f9fa;
+    }
+    .profile-card {
+        max-width: 500px;
+        margin: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        background-color: #fff;
+    }
+    .card-title {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        font-weight: bold;
+    }
+    .btn-block {
+        margin-top: 20px;
+    }
+    .btn-danger {
+        margin-top: 10px;
+    }
+    .back-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
 </style>
 <body>
     <div class="container mt-5">
+        <a href="index.php" class="btn btn-secondary back-button">Back</a>
         <div class="card profile-card">
             <div class="card-body">
                 <h3 class="card-title text-center">Profile</h3>
-                <form>
-                    <div class="form-group">
-                        <label for="namaPelanggan">Nama Pelanggan</label>
-                        <input type="text" class="form-control" id="namaPelanggan" placeholder="Masukkan Nama">
-                    </div>
-                    <div class="form-group">
-                        <label for="emailPelanggan">Email</label>
-                        <input type="email" class="form-control" id="emailPelanggan" placeholder="Masukkan Email">
-                    </div>
-                    <div class="form-group">
-                        <label for="telpPelanggan">Telepon</label>
-                        <input type="tel" class="form-control" id="telpPelanggan" placeholder="Masukkan Nomor Telepon">
-                    </div>
-                    <div class="form-group">
-                        <label for="passwordPelanggan">Password</label>
-                        <input type="password" class="form-control" id="passwordPelanggan" placeholder="Masukkan Password">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
-                    <button type="button" class="btn btn-danger btn-block" onclick="window.location.href='login.php'">Delete Profile</button>
-                </form>
+                <form method="POST" action="controller.php">
+    <input type="hidden" name="action" value="updateProfile">
+    <div class="form-group">
+        <label for="namaPelanggan">Nama Pelanggan</label>
+        <input type="text" class="form-control" id="namaPelanggan" name="nama" value="<?php echo htmlspecialchars($user['nama_pelanggan']); ?>" placeholder="Masukkan Nama">
+    </div>
+    <div class="form-group">
+        <label for="emailPelanggan">Email</label>
+        <input type="email" class="form-control" id="emailPelanggan" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" placeholder="Masukkan Email">
+    </div>
+    <div class="form-group">
+        <label for="telpPelanggan">Telepon</label>
+        <input type="tel" class="form-control" id="telpPelanggan" name="telp" value="<?php echo htmlspecialchars($user['telp']); ?>" placeholder="Masukkan Nomor Telepon">
+    </div>
+    <div class="form-group">
+        <label for="passwordPelanggan">Password</label>
+        <input type="password" class="form-control" id="passwordPelanggan" name="password" value="<?php echo htmlspecialchars($user['password']); ?>" placeholder="Masukkan Password">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
+    <button type="button" class="btn btn-danger btn-block" onclick="window.location.href='login.php'">Delete Profile</button>
+</form>
+
             </div>
         </div>
     </div>
