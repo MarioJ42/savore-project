@@ -138,6 +138,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title"><?php echo $product['nama']; ?></h5>
                         <p class="card-text ">Rp.<?php echo number_format($product['harga'], 2); ?></p>
+                        <p>Quantity</p>
                         <input type="hidden" name="id_produk[]" value="<?php echo $product['id_produk']; ?>">
                         <center><input type="number" name="quantity[]" class="form-control text-center" placeholder="" style="width: 6em;" min="0"></center>
                     </div>
@@ -166,6 +167,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title"><?php echo $product['nama']; ?></h5>
                         <p class="card-text ">Rp.<?php echo number_format($product['harga'], 2); ?></p>
+                        <p>Quantity</p>
                         <input type="hidden" name="id_produk[]" value="<?php echo $product['id_produk']; ?>">
                         <center><input type="number" name="quantity[]" class="form-control text-center" placeholder="" style="width: 6em;" min="0"></center>
                     </div>
@@ -195,6 +197,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title"><?php echo $product['nama']; ?></h5>
                         <p class="card-text ">Rp.<?php echo number_format($product['harga'], 2); ?></p>
+                        <p>Quantity</p>
                         <input type="hidden" name="id_produk[]" value="<?php echo $product['id_produk']; ?>">
                         <center><input type="number" name="quantity[]" class="form-control text-center" placeholder="" style="width: 6em;" min="0"></center>
                     </div>
