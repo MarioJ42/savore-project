@@ -69,7 +69,7 @@ $user = $_SESSION['user'];
     </div>
     <div class="form-group">
         <label for="passwordPelanggan">Password</label>
-        <input type="password" class="form-control" id="passwordPelanggan" name="password" value="<?php echo htmlspecialchars($user['password']); ?>" placeholder="Masukkan Password" required>
+        <input type="text" class="form-control" id="passwordPelanggan" name="password" value="<?php echo htmlspecialchars($user['password']); ?>" placeholder="Masukkan Password" required>
     </div>
     <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
 </form>

@@ -109,6 +109,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id_pelanggan = $_SESSION['user']['id_pelanggan'];
 
         try {
+            // ambil email lama dari database
+            $sql = "SELECT email FROM pelanggan WHERE id_pelanggan = :id_pelanggan";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':id_pelanggan', $id_pelanggan);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $old_email = $result['email'];
+    
+            // jika email baru berbeda dengan email lama, cek apakah email baru sudah ada di database
+            if ($email != $old_email) {
+                $sql = "SELECT COUNT(*) FROM pelanggan WHERE email = :email";
+                $stmt = $dbh->prepare($sql);
+                $stmt->bindParam(':email', $email);
+                $stmt->execute();
+                $count = $stmt->fetchColumn();
+    
+                if ($count > 0) {
+                    echo "<script>alert('Error: Email sudah digunakan.'); window.location.href='profile.php';</script>";
+                    exit();
+                }
+            }
+    
             // update data di db
             $sql = "UPDATE pelanggan SET nama_pelanggan = :nama_pelanggan, email = :email, telp = :telp, password = :password WHERE id_pelanggan = :id_pelanggan";
             $stmt = $dbh->prepare($sql);
@@ -118,14 +140,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':password', $password);
             $stmt->bindParam(':id_pelanggan', $id_pelanggan);
             $stmt->execute();
-
+    
             // update data session supaya values baru
             $_SESSION['user']['nama_pelanggan'] = $nama_pelanggan;
             $_SESSION['user']['email'] = $email;
             $_SESSION['user']['telp'] = $telp;
             $_SESSION['user']['password'] = $password;
-
-            header("Location: profile.php");
+    
+            echo "<script>alert('Profil telah diperbarui.'); window.location.href='profile.php';</script>";
             exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -144,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             session_destroy();
 
-            header("Location: login.php");
+            echo "<script>alert('Akun sudah di hapus.'); window.location.href='login.php';</script>";
             exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
