@@ -37,6 +37,7 @@ try {
     <link href="assets/css/main.css" rel="stylesheet">
 </head>
 <body >
+<button type="submit"  class="btn btn-primary" style="margin:10px ;"> <a href="index.php" style="color:white; text-decoration:none;">Back</a></button>
 <div style="display: flex; justify-content: center; align-items: center;margin-top:200px;">
 <div class="container mt-5" style=" max-width: 600px; padding: 2rem; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; background-color: #fff; ">
         <h2 class="mt-4" style="text-align: center; margin-bottom: 1.5rem;">Add New Menu</h2>

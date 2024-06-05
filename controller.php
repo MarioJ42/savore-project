@@ -293,8 +293,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bindParam(':price', $price);
                 $stmt->bindParam(':file', $target_file);
                 $stmt->execute();
-    
-                echo "New record created successfully";
+               
+                echo " <script>alert('New produk created successfully!')</script>";
                 header("Location: MenuManager.php");
                 exit();
             } catch (PDOException $e) {
