@@ -35,39 +35,78 @@ try {
 
     <!-- Template Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            
+        }
+        .navbar {
+            background-color: #fbebcb;
+            overflow: hidden;
+            
+            display: flex;
+            align-items: center;
+        }
+        .navbar img {
+            margin-left: 50px;
+            width: 5vw;
+        }
+        .navbar a {
+            display: block;
+            color: #a8803c;
+            text-align: center;
+            
+            text-decoration: none;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+    </style>
 </head>
-<body >
-<button type="submit"  class="btn btn-primary" style="margin:10px ;"> <a href="index.php" style="color:white; text-decoration:none;">Back</a></button>
-<div style="display: flex; justify-content: center; align-items: center;margin-top:200px;">
-<div class="container mt-5" style=" max-width: 600px; padding: 2rem; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; background-color: #fff; ">
-        <h2 class="mt-4" style="text-align: center; margin-bottom: 1.5rem;">Add New Menu</h2>
-        <form action="controller.php" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="name" style="font-weight: bold;">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="kategori" style="font-weight: bold;">Category :</label>
-                <select class="form-control" id="kategori" name="kategori" required>
-                    <option value="1">Coffee</option>
-                    <option value="2">Frappe</option>
-                    <option value="3">Fruitie</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="price" style="font-weight: bold;">Price:</label>
-                <input type="number" class="form-control" id="price" name="price" required>
-            </div>
-            <div class="form-group">
-                <label for="pict" style="font-weight: bold;">Image:</label>
-                <input type="file" class="form-control-file" id="pict" name="pict" required>
-            </div>
-            <button type="submit" class="btn btn-danger" name="addItem" style="width: 100%; padding: 0.75rem; margin:10px;">Add</button>
-        </form>
-</div>
-</div>
-<section id="menu" class="menu" style="margin-top:50px;">
-    <div class="container" data-aos="fade-up">
+<body>
+    <div class="navbar">
+        <img src="assets/img/logo.png" alt="">
+        <a href="#" id="addMenuBtn" style="margin-left: -400px;">Add Menu</a>
+        <a href="#" id="seeMenuBtn" style="margin-left: -400px;">Menu</a>
+        <button type="submit"  class="btn btn-danger" style="margin-right:30px ;"> <a href="login.php" style="color:white; text-decoration:none;">LogOut</a></button>
+        
+        
+    </div>
+
+    <div id="addMenuSection" class="section container mt-5">
+        <div class="container mt-5" style="max-width: 600px; padding: 2rem; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; background-color: #fff;">
+            <h2 class="mt-4" style="text-align: center; margin-bottom: 1.5rem;">Add New Menu</h2>
+            <form action="controller.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name" style="font-weight: bold;">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="kategori" style="font-weight: bold;">Category :</label>
+                    <select class="form-control" id="kategori" name="kategori" required>
+                        <option value="1">Coffee</option>
+                        <option value="2">Frappe</option>
+                        <option value="3">Fruitie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price" style="font-weight: bold;">Price:</label>
+                    <input type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <div class="form-group">
+                    <label for="pict" style="font-weight: bold;">Image:</label>
+                    <input type="file" class="form-control-file" id="pict" name="pict" required>
+                </div>
+                <button type="submit" class="btn btn-danger" name="addItem" style="width: 100%; padding: 0.75rem; margin:10px;">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="menuSection" class="section container" data-aos="fade-up" style="margin-top: 50px;">
         <div class="section-header">
             <h2>Our Menu</h2>
             <p>Check Our <span>Menu</span></p>
@@ -95,116 +134,88 @@ try {
                     <h4>Fruitie Series</h4>
                 </a>
             </li>
-           
         </ul>
 
-    <div class="tab-pane fade" id="coffee">
-    <div class="tab-header text-center">
-        <p>Menu</p>
-        <h3>Coffee and Latte</h3>
-    </div>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="best">
+                <!-- Bestsellers content here -->
+            </div>
+            <div class="tab-pane fade" id="coffee">
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Coffee and Latte</h3>
+                </div>
 
-    <div class="row gy-5">
-        <?php foreach ($products as $product) {
-            if ($product['id_kategori'] == 1) { ?>
-                <div class="col-lg-4 menu-item">
-                    <a href="<?= $product['file_path'] ?>" class="glightbox"><img src="<?= $product['file_path'] ?>" class="menu-img img-fluid" alt=""></a>
-                    <h4><?= $product['nama_produk'] ?></h4>
-                    <p class="price">
-                        Rp.<?= number_format($product['harga'], 2, ',', '.') ?>
-                    </p>
-                    <form action="" method="post">
-                        <input type="hidden" name="product_id" value="<?= $product['id_produk'] ?>">
-                        <button type="submit" class="btn btn-danger" name="deleteItem">Hapus</button>
-                    </form>
-                </div><!-- Menu Item -->
-            <?php }
-        } ?>
-    </div>
-</div>
+                <div class="row gy-5">
+                    <?php foreach ($products as $product) {
+                        if ($product['id_kategori'] == 1) { ?>
+                            <div class="col-lg-4 menu-item">
+                                <a href="<?= $product['file_path'] ?>" class="glightbox"><img src="<?= $product['file_path'] ?>" class="menu-img img-fluid" alt=""></a>
+                                <h4><?= $product['nama_produk'] ?></h4>
+                                <p class="price">
+                                    Rp.<?= number_format($product['harga'], 2, ',', '.') ?>
+                                </p>
+                                <form action="" method="post">
+                                    <input type="hidden" name="product_id" value="<?= $product['id_produk'] ?>">
+                                    <button type="submit" class="btn btn-danger" name="deleteItem">Hapus</button>
+                                </form>
+                            </div><!-- Menu Item -->
+                        <?php }
+                    } ?>
+                </div>
+            </div>
 
-<div class="tab-pane fade" id="frappe">
-    <div class="tab-header text-center" style="margin-top: -350px;" >
-        <p>Menu</p>
-        <h3>Frappe</h3>
-    </div>
+            <div class="tab-pane fade" id="frappe">
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Frappe</h3>
+                </div>
 
-    <div class="row gy-5">
-        <?php foreach ($products as $product) {
-            if ($product['id_kategori'] == 2) { ?>
-                <div class="col-lg-4 menu-item" >
-                    <a href="<?= $product['file_path'] ?>" class="glightbox"><img src="<?= $product['file_path'] ?>" class="menu-img img-fluid" alt=""></a>
-                    <h4><?= $product['nama_produk'] ?></h4>
-                    <p class="price">
-                        Rp.<?= number_format($product['harga'], 2, ',', '.') ?>
-                    </p>
-                    <form action="" method="post">
-                        <input type="hidden" name="product_id" value="<?= $product['id_produk'] ?>">
-                        <button type="submit" class="btn btn-danger" name="deleteItem">Hapus</button>
-                    </form>
-                </div><!-- Menu Item -->
-            <?php }
-        } ?>
-    </div>
-</div>
+                <div class="row gy-5">
+                    <?php foreach ($products as $product) {
+                        if ($product['id_kategori'] == 2) { ?>
+                            <div class="col-lg-4 menu-item">
+                                <a href="<?= $product['file_path'] ?>" class="glightbox"><img src="<?= $product['file_path'] ?>" class="menu-img img-fluid" alt=""></a>
+                                <h4><?= $product['nama_produk'] ?></h4>
+                                <p class="price">
+                                    Rp.<?= number_format($product['harga'], 2, ',', '.') ?>
+                                </p>
+                                <form action="" method="post">
+                                    <input type="hidden" name="product_id" value="<?= $product['id_produk'] ?>">
+                                    <button type="submit" class="btn btn-danger" name="deleteItem">Hapus</button>
+                                </form>
+                            </div><!-- Menu Item -->
+                        <?php }
+                    } ?>
+                </div>
+            </div>
 
-<div class="tab-pane fade" id="fruitie">
-    <div class="tab-header text-center" style="margin-top: -250px;">
-        <p>Menu</p>
-        <h3>Fruitie Series</h3>
-    </div>
+            <div class="tab-pane fade" id="fruitie">
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Fruitie Series</h3>
+                </div>
 
-    <div class="row gy-5">
-        <?php foreach ($products as $product) {
-            if ($product['id_kategori'] == 3) { ?>
-                <div class="col-lg-4 menu-item">
-                    <a href="<?= $product['file_path'] ?>" class="glightbox"><img src="<?= $product['file_path'] ?>" class="menu-img img-fluid" alt=""></a>
-                    <h4><?= $product['nama_produk'] ?></h4>
-                    <p class="price">
-                        Rp.<?= number_format($product['harga'], 2, ',', '.') ?>
-                    </p>
-                    <form action="" method="post">
-                        <input type="hidden" name="product_id" value="<?= $product['id_produk'] ?>">
-                        <button type="submit" class="btn btn-danger" name="deleteItem">Hapus</button>
-                    </form>
-                </div><!-- Menu Item -->
-            <?php }
-        } ?>
-    </div>
-</div>
-
-
-</div>
-</section>
-
-<!-- 
-<div class="container mt-5">
-    <h2 class="mt-4">Add New Menu</h2>
-    <form action="controller.php" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+                <div class="row gy-5">
+                    <?php foreach ($products as $product) {
+                        if ($product['id_kategori'] == 3) { ?>
+                            <div class="col-lg-4 menu-item">
+                                <a href="<?= $product['file_path'] ?>" class="glightbox"><img src="<?= $product['file_path'] ?>" class="menu-img img-fluid" alt=""></a>
+                                <h4><?= $product['nama_produk'] ?></h4>
+                                <p class="price">
+                                    Rp.<?= number_format($product['harga'], 2, ',', '.') ?>
+                                </p>
+                                <form action="" method="post">
+                                    <input type="hidden" name="product_id" value="<?= $product['id_produk'] ?>">
+                                    <button type="submit" class="btn btn-danger" name="deleteItem">Hapus</button>
+                                </form>
+                            </div><!-- Menu Item -->
+                        <?php }
+                    } ?>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="kategori">Category ID:</label>
-            <select class="form-control" id="kategori" name="kategori" required>
-                <option value="1">Coffee</option>
-                <option value="2">Frappe</option>
-                <option value="3">Fruitie</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="price">Price:</label>
-            <input type="number" class="form-control" id="price" name="price" required>
-        </div>
-        <div class="form-group">
-            <label for="pict">Image:</label>
-            <input type="file" class="form-control-file" id="pict" name="pict" required>
-        </div>
-        <button type="submit" class="btn btn-primary" name="addItem">Add</button>
-    </form>
-</div> -->
-
+    </div>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -216,5 +227,20 @@ try {
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+
+    <script>
+        document.getElementById('addMenuBtn').addEventListener('click', function() {
+            document.getElementById('addMenuSection').classList.add('active');
+            document.getElementById('menuSection').classList.remove('active');
+        });
+
+        document.getElementById('seeMenuBtn').addEventListener('click', function() {
+            document.getElementById('menuSection').classList.add('active');
+            document.getElementById('addMenuSection').classList.remove('active');
+        });
+
+        
+        document.getElementById('menuSection').classList.add('active');
+    </script>
 </body>
 </html>

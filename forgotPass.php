@@ -82,14 +82,14 @@ if(isset($_POST['btnResetPassword'])){
 
     .lock-icon {
         font-size: 3rem;
-        color: #007bff;
+        color:#FF4B2B;
     }
 
     h2 {
         font-size: 1.5rem;
         margin-top: 10px;
         text-transform: uppercase;
-        color: #007bff;
+        color: black;
     }
 
     p {
@@ -117,7 +117,7 @@ if(isset($_POST['btnResetPassword'])){
     button {
         margin-top: 15px;
         width: 100%;
-        background-color: #007bff;
+        background-color: #FF4B2B;
         color: white;
         padding: 10px;
         border: none;
