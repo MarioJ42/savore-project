@@ -69,13 +69,11 @@ $user = $_SESSION['user'];
     </div>
     <div class="form-group">
         <label for="passwordPelanggan">Password</label>
-        <input type="text" class="form-control" id="passwordPelanggan" name="password" value="<?php echo htmlspecialchars($user['password']); ?>" placeholder="Masukkan Password" required>
+        <input type="password" class="form-control" id="passwordPelanggan" name="password" value="<?php echo htmlspecialchars($user['password']); ?>" placeholder="Masukkan Password" required>
     </div>
     <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
-    <form method="POST" action="controller.php" class="mt-2">
-        <input type="hidden" name="action" value="deleteProfile">
-        <button type="submit" class="btn btn-danger btn-block">Delete Profile</button>
-    <!-- <button type="button" class="btn btn-danger btn-block" onclick="window.location.href='login.php'">Delete Profile</button> -->
+    <button type="button" class="btn btn-danger btn-block" onclick="window.location.href='login.php'">Delete Profile</button>
+    </form>
 </form>
 
             </div>
