@@ -36,8 +36,36 @@ try {
     <!-- Template Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
 </head>
-<body>
-<section id="menu" class="menu">
+<body >
+<div style="display: flex; justify-content: center; align-items: center;margin-top:200px;">
+<div class="container mt-5" style=" max-width: 600px; padding: 2rem; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; background-color: #fff; ">
+        <h2 class="mt-4" style="text-align: center; margin-bottom: 1.5rem;">Add New Menu</h2>
+        <form action="controller.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name" style="font-weight: bold;">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="kategori" style="font-weight: bold;">Category :</label>
+                <select class="form-control" id="kategori" name="kategori" required>
+                    <option value="1">Coffee</option>
+                    <option value="2">Frappe</option>
+                    <option value="3">Fruitie</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price" style="font-weight: bold;">Price:</label>
+                <input type="number" class="form-control" id="price" name="price" required>
+            </div>
+            <div class="form-group">
+                <label for="pict" style="font-weight: bold;">Image:</label>
+                <input type="file" class="form-control-file" id="pict" name="pict" required>
+            </div>
+            <button type="submit" class="btn btn-danger" name="addItem" style="width: 100%; padding: 0.75rem; margin:10px;">Add</button>
+        </form>
+</div>
+</div>
+<section id="menu" class="menu" style="margin-top:50px;">
     <div class="container" data-aos="fade-up">
         <div class="section-header">
             <h2>Our Menu</h2>
@@ -69,7 +97,7 @@ try {
            
         </ul>
 
-        <div class="tab-pane fade" id="coffee">
+    <div class="tab-pane fade" id="coffee">
     <div class="tab-header text-center">
         <p>Menu</p>
         <h3>Coffee and Latte</h3>
@@ -95,7 +123,7 @@ try {
 </div>
 
 <div class="tab-pane fade" id="frappe">
-    <div class="tab-header text-center" >
+    <div class="tab-header text-center" style="margin-top: -350px;" >
         <p>Menu</p>
         <h3>Frappe</h3>
     </div>
@@ -120,7 +148,7 @@ try {
 </div>
 
 <div class="tab-pane fade" id="fruitie">
-    <div class="tab-header text-center" >
+    <div class="tab-header text-center" style="margin-top: -250px;">
         <p>Menu</p>
         <h3>Fruitie Series</h3>
     </div>
@@ -148,7 +176,7 @@ try {
 </div>
 </section>
 
-
+<!-- 
 <div class="container mt-5">
     <h2 class="mt-4">Add New Menu</h2>
     <form action="controller.php" method="post" enctype="multipart/form-data">
@@ -174,7 +202,7 @@ try {
         </div>
         <button type="submit" class="btn btn-primary" name="addItem">Add</button>
     </form>
-</div>
+</div> -->
 
 
     <!-- Vendor JS Files -->

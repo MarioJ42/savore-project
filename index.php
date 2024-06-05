@@ -241,16 +241,16 @@ $cekManager = isset($_SESSION['user']) && $_SESSION['user']['email'] === 'manage
 
             <?php if ($cekManager): ?>
             <li class="nav-item" style="margin-top:10px;">
-              <a class="btn_signIn" href="MenuManager.php">See more</a>
+              <a class="btn_signIn" href="MenuManager.php">Add Menu</a>
             </li>
             <?php endif; ?>
-          <?php if (!$cekManager): ?>
+          
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" data-bs-target="#fruitie">
               <h4>Fruitie Series</h4>
             </a>
           </li>
-          <?php endif; ?>
+          
         </ul>
 
         <div class="tab-content" data-aos="fade-up" data-aos-delay="300">

@@ -31,7 +31,8 @@
       </style>
     </head>
     <body>
-        <a href="index.php">Back</a>
+    <button type="submit"  class="btn btn-primary" style="margin:10px ;"> <a href="index.php" style="color:white; text-decoration:none;">Back</a></button>
+        <!-- <a href="index.php">Back</a> -->
 
         <center>
             <div class="container" style="margin: 3vh;">
